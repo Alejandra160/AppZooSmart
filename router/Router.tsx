@@ -20,8 +20,6 @@ const Router = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown:false}}initialRouteName="Welcome">
       <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
-
-        
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen}/>
         <Stack.Screen name="Employees" component={CreateEmployeeScreen}/>

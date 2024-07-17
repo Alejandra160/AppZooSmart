@@ -11,12 +11,12 @@ const ReptilisScreen = () => {
       <TouchableOpacity style={styles.arrowContainer} onPress={() => navigation.goBack()}>
         <Image source={require('../Images/arrowButton.png')} style={styles.arrowImage} />
       </TouchableOpacity>
-      <Image source={require('../Images/LogoS.png')} style={styles.LogoImage} />
-      <Text style={styles.TitleText}>REPTILIS ZONE</Text>
+      <Image source={require('../Images/LogoS.png')} style={styles.logoImage} />
+      <Text style={styles.titleText}>REPTILIS ZONE</Text>
       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddSpecie')}>
         <Text style={styles.addButtonText}>+ ADD SPECIES</Text>
       </TouchableOpacity>
-      <Text style={styles.SubText}>SPECIES</Text>
+      <Text style={styles.subText}>SPECIES</Text>
 
       <ScrollView contentContainerStyle={styles.speciesContainer}>
         <View style={styles.speciesBox}>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  TitleText: {
+  titleText: {
     fontSize: 25,
     top: 90,
     color: 'white',
@@ -81,15 +81,14 @@ const styles = StyleSheet.create({
     width: 30,
     height: 20,
   },
-  LogoImage: {
+  logoImage: {
     position: 'absolute',
     top: 0,
     right: 0,
-    width: 100,
-    height: 150,
- 
+    width: 150,  // Aumentado el ancho
+    height: 200, // Aumentado la altura
   },
-  SubText: {
+  subText: {
     fontSize: 30,
     marginTop: 50,
     color: 'white',
@@ -101,7 +100,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   speciesBox: {
-
     padding: 20,
     marginVertical: 10,
     borderWidth: 5,
@@ -118,7 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     marginTop: 10,
-    width:300,
+    width: 300,
     marginBottom: 60, // Espacio para el botón
   },
   moreButton: {

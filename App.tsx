@@ -15,6 +15,9 @@ import ReptilisZoneScreen from './pages/MoreR';
 import AquaticZoneScreen from './pages/MoreA';
 import BirdsZoneScreen from './pages/MoreB';
 import LandZoneScreen from './pages/MoreL';
+import WelcomeEScreen from './pages/HomePageE';
+import PerfilEScreen from './pages/ProfilEmployee';
+import EmployeeZoneScreen from './pages/MoreEmployee';
 
 
 const Stack = createStackNavigator();
@@ -22,7 +25,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="WelcomeEmployee">
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen} />
         <Stack.Screen name="CreateEmployee" component={CreateEmployeeScreen} />
@@ -37,6 +40,11 @@ const App = () => {
         <Stack.Screen name="AquaticZone" component={AquaticZoneScreen} />
         <Stack.Screen name="BirdsZone" component={BirdsZoneScreen} />
         <Stack.Screen name="LandZone" component={LandZoneScreen} />
+        <Stack.Screen name="WelcomeEmployee" component={WelcomeEScreen} />
+        <Stack.Screen name="ProfilEmployee" component={PerfilEScreen} />
+        <Stack.Screen name="EmployeeZone" component={EmployeeZoneScreen} />
+
+
 
 
       </Stack.Navigator>
