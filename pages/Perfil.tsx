@@ -1,10 +1,17 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, Image, TextInput, TouchableOpacity, Text, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
+
 
 const PerfilScreen = () => {
   const windowHeight = Dimensions.get('window').height;
   const navigation = useNavigation();
+
+  let [fontsLoaded] = useFonts({
+    
+    BreeSerif_400Regular
+  });
 
   return (
     
@@ -16,7 +23,7 @@ const PerfilScreen = () => {
      
 
       
-    <Text style={styles.TitleText}>PROFILE</Text>
+    <Text style={styles.textRegular}>PROFILE</Text>
     
     
         <TextInput style={styles.input} placeholder="NOMBRE" placeholderTextColor="#000" />
@@ -25,10 +32,10 @@ const PerfilScreen = () => {
         <TextInput style={styles.input} placeholder="DIRECCION (Calle, nm)" placeholderTextColor="#000" />
         <TextInput style={styles.input} placeholder="PASSWORD" placeholderTextColor="#000" secureTextEntry={true} />
         <TouchableOpacity style={styles.updateButton}>
-          <Text style={styles.updateButtonText}>UPDATE ACCOUNT</Text>
+          <Text style={styles.textRegularButton}>UPDATE ACCOUNT</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.deleteButton}>
-          <Text style={styles.deleteButtonText}>DELETED ACCOUNT</Text>
+          <Text style={styles.textRegularButton}>DELETED ACCOUNT</Text>
         </TouchableOpacity>
         
       
@@ -51,11 +58,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 150,
   },
-  TitleText:{
-    marginBottom : 40,
-    color :'white',
-    fontSize:30,
-
+  textRegular: {
+    fontFamily: 'BreeSerif_400Regular',
+    fontSize: 35,
+    marginBottom:30,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   arrowContainer:{
     position: 'absolute',
@@ -70,8 +78,6 @@ const styles = StyleSheet.create({
     width: 30,
     height: 20,
   },
- 
-
   input: {
     width: '80%',
     backgroundColor: '#B3E5FC',
@@ -89,12 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  deleteButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: 'center',
-  },
+
   updateButton : {
     backgroundColor: '#84ae1b',
     borderRadius: 20,
@@ -103,12 +104,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
 
   },
-  updateButtonText : {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: 'center',
-  }
+  textRegularButton: {
+    color: '#FFFFFF',
+    fontWeight:'600',
+    fontFamily:'BreeSerif_400Regular',
+    fontSize:20
+  },
   
 });
 

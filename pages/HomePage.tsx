@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import {  useFonts, Karla_800ExtraBold } from '@expo-google-fonts/karla';
+import { Karla_600SemiBold } from '@expo-google-fonts/karla';
 
 const CreateAccountScreen = () => {
   const [nombre, setNombre] = useState('');
@@ -29,8 +31,15 @@ const CreateAccountScreen = () => {
   };
 
   const handleGoBack = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Login');
+    
   };
+
+  let [fontsLoaded] = useFonts({
+    
+    Karla_800ExtraBold,
+    Karla_600SemiBold
+  });
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -42,15 +51,18 @@ const CreateAccountScreen = () => {
           source={require('../Images/fondo.png')}
           style={styles.backgroundImage}
         />
+        
       </View>
+
+     
 
       <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>CREATE ACCOUNT</Text>
+          <Text style={styles.textRegular}>CREATE ACCOUNT</Text>
           <View style={styles.headerLine} />
         </View>
 
-        <Text style={styles.formTitle}>ADMIN INFO</Text>
+        <Text style={styles.textRegularSub}>ADMIN INFO</Text>
         <TextInput
           style={styles.input}
           placeholder="NAME"
@@ -72,7 +84,7 @@ const CreateAccountScreen = () => {
           secureTextEntry
         />
 
-        <Text style={styles.formTitle}>ZOO INFO</Text>
+        <Text style={styles.textRegularSub}>ZOO INFO</Text>
         <TextInput
           style={styles.input}
           placeholder="NOMBRE ZOO"
@@ -140,10 +152,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textRegular: {
+    fontFamily: 'Karla_800ExtraBold ',
+    fontSize: 39,
+    textAlign:'center',
+    marginTop:50,
+    color:'white'
+  },
+  textRegularSub: {
+    fontFamily: 'Karla_600SemiBold ',
+    fontSize: 25,
+    marginTop:20,
+    textAlign:'center',
+    color:'Black'
+  },
   arrowImage: {
     width: 30,
     height: 20,
   },
+
   backgroundImage: {
     width: '100%',
     height: '100%', // Asegúrate de que cubra toda la pantalla

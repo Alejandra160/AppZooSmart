@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 const Router = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}initialRouteName="Welcome">
+      <Stack.Navigator screenOptions={{headerShown:false}}initialRouteName="CreateAccount">
       <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen}/>

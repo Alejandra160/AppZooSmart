@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="WelcomeEmployee">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcom">
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen} />
         <Stack.Screen name="CreateEmployee" component={CreateEmployeeScreen} />

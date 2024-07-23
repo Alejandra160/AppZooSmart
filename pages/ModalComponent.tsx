@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import {  useFonts, Karla_800ExtraBold } from '@expo-google-fonts/karla';
 
 interface ModalComponentProps {
   visible: boolean;
@@ -17,7 +18,10 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ visible, onClose }) => 
     navigation.navigate('Welcome');
     onClose();
   };
+  let [fontsLoaded] = useFonts({
 
+    Karla_800ExtraBold
+  });
   return (
     <Modal
       animationType="fade"
@@ -28,7 +32,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ visible, onClose }) => 
       <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={onClose}>
         <TouchableOpacity style={styles.modal} activeOpacity={1}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Login</Text>
+            <Text style={styles.textRegularButtons2}>Login</Text>
             
             <TextInput
               style={styles.input}
@@ -50,8 +54,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ visible, onClose }) => 
               autoCapitalize="none"
             />
 
-            <TouchableOpacity onPress={handleLogin} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>LOGIN</Text>
+            <TouchableOpacity  style={styles.closeButton}>
+              <Text style={styles.textRegularButtons2}>LOGIN</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -82,6 +86,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 15,
     elevation: 10,
+  },
+  textRegularButtons2: {
+    fontFamily: 'Karla_800ExtraBold',
+    fontSize: 15,
+    color:'white'
   },
   modalContent: {
     flexDirection: 'column',

@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ImageBackground, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
+import { Questrial_400Regular } from '@expo-google-fonts/questrial';
+
 
 const ReptilisScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+
+  let [fontsLoaded] = useFonts({
+    
+    BreeSerif_400Regular,
+    Questrial_400Regular
+  });
 
   return (
     <ImageBackground source={require('../Images/ReptilisFondo.png')} style={styles.background}>
@@ -50,10 +59,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    fontSize: 25,
+    fontSize: 50,
     top: 90,
     color: 'white',
-    position: 'absolute'
+    position: 'absolute',
+    fontFamily: 'BreeSerif_400Regular'
   },
   addButton: {
     width: '50%',
@@ -66,7 +76,9 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: 'black',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize:18,
+    fontFamily:'BreeSerif_400Regular'
   },
   arrowContainer: {
     position: 'absolute',
@@ -89,9 +101,10 @@ const styles = StyleSheet.create({
     height: 200, // Aumentado la altura
   },
   subText: {
-    fontSize: 30,
+    fontSize: 35,
     marginTop: 50,
     color: 'white',
+    fontFamily:'BreeSerif_400Regular',
     alignSelf: 'center',
   },
   speciesContainer: {
@@ -110,6 +123,7 @@ const styles = StyleSheet.create({
   speciesName: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily:'BreeSerif_400Regular',
     color: '#fff',
   },
   speciesDescription: {
@@ -117,6 +131,7 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 10,
     width: 300,
+    fontFamily:'Questrial_400Regular',
     marginBottom: 60, // Espacio para el botón
   },
   moreButton: {
@@ -130,8 +145,9 @@ const styles = StyleSheet.create({
   },
   moreButtonText: {
     color: '#fff',
+    fontFamily:'BreeSerif_400Regular',
     fontWeight: 'bold',
-  },
+  }
 });
 
 export default ReptilisScreen;

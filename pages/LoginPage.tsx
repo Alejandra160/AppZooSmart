@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import ModalComponent from './ModalComponent';
 import { useNavigation } from '@react-navigation/native';
-import { Questrial_400Regular, useFonts } from '@expo-google-fonts/questrial';
+import {LilitaOne_400Regular, useFonts } from '@expo-google-fonts/lilita-one';
+import {  Karla_800ExtraBold } from '@expo-google-fonts/karla';
 
 
 const LoginPage: React.FC = () => {
@@ -11,7 +12,8 @@ const LoginPage: React.FC = () => {
 
   
   let [fontsLoaded] = useFonts({
-    Questrial_400Regular
+    LilitaOne_400Regular,
+    Karla_800ExtraBold
   });
 
   const openModal = () => {
@@ -36,7 +38,7 @@ const LoginPage: React.FC = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.loginButton} onPress={openModal}>
-            <Text style={styles.loginButtonText}>LOGIN</Text>
+            <Text style={styles.textRegularButtons2}>LOGIN</Text>
           </TouchableOpacity>
         </View>
 
@@ -47,7 +49,7 @@ const LoginPage: React.FC = () => {
         <Text style={styles.textRegular}>WHERE TECHNOLOGY PROTECTS WILDLIFE</Text>
 
         <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
-          <Text style={styles.buttonText}>Create an account</Text>
+          <Text style={styles.textRegularButtons}>Create an account</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -87,12 +89,24 @@ const styles = StyleSheet.create({
     top: 50,
   },
   textRegular: {
-    fontFamily: 'Questrial',
-    fontSize: 35,
+    fontFamily: 'LilitaOne_400Regular',
+    fontSize: 39,
+    textAlign:'center',
+    justifyContent:'space-between',
     color:'white'
   },
+  textRegularButtons: {
+    fontFamily: 'Karla_800ExtraBold',
+    fontSize: 26,
+    color:'white'
+  },
+  textRegularButtons2: {
+    fontFamily: 'Karla_800ExtraBold',
+    fontSize: 18,
+    color:'black'
+  },
   loginButton: {
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: 'white',
     borderRadius: 25,
     paddingVertical: 10,
@@ -129,12 +143,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginTop: 60,
   },
-  buttonText: {
-    color: '#FFF',
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+
 });
 
 export default LoginPage;
