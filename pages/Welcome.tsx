@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {  useFonts, Karla_800ExtraBold } from '@expo-google-fonts/karla';
-import { BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
+import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
 
 
 
@@ -13,7 +12,7 @@ const WelcomeScreen = () => {
 
   let [fontsLoaded] = useFonts({
     
-    Karla_800ExtraBold,
+   
     BreeSerif_400Regular
   
   });
@@ -159,7 +158,7 @@ const styles = StyleSheet.create({
     top: '50%',
     left: '50%',
     transform: [{ translateX: -90 }, { translateY: -20 }],
-    fontSize: 35,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#FFFFFF',
   },

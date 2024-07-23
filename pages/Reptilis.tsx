@@ -94,12 +94,13 @@ const styles = StyleSheet.create({
     height: 20,
   },
   logoImage: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: 150,  // Aumentado el ancho
-    height: 200, // Aumentado la altura
-  },
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: 100,
+      height: 150,
+   
+    },
   subText: {
     fontSize: 35,
     marginTop: 50,
