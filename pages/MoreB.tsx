@@ -47,9 +47,6 @@ const BirdsZoneScreen = () => {
           {['VALERIA', 'FERNANDA', 'ALEJANDRA', 'JAVIER'].map((employee, index) => (
             <View key={index} style={styles.employeeRow}>
               <Text style={styles.employeeName}>{employee}</Text>
-              <TouchableOpacity>
-                <Text style={styles.deleteIcon}>🗑️</Text>
-              </TouchableOpacity>
             </View>
           ))}
         </View>

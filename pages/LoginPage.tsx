@@ -8,7 +8,7 @@ import {  Karla_800ExtraBold } from '@expo-google-fonts/karla';
 
 const LoginPage: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
+  
 
   
   let [fontsLoaded] = useFonts({
@@ -24,9 +24,7 @@ const LoginPage: React.FC = () => {
     setModalVisible(false);
   };
 
-  const handleCreateAccount = () => {
-    navigation.navigate('CreateAccount'); // Asegúrate de que el nombre coincida con el definido en el navegador
-  };
+
 
   return (
     <ImageBackground
@@ -48,9 +46,7 @@ const LoginPage: React.FC = () => {
 
         <Text style={styles.textRegular}>WHERE TECHNOLOGY PROTECTS WILDLIFE</Text>
 
-        <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
-          <Text style={styles.textRegularButtons}>Create an account</Text>
-        </TouchableOpacity>
+       
       </ScrollView>
 
       <ModalComponent visible={modalVisible} onClose={closeModal} />
@@ -136,13 +132,7 @@ const styles = StyleSheet.create({
     fontWeight: '100',
     paddingHorizontal: 20,
   },
-  button: {
-    backgroundColor: '#ffcf27',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    marginTop: 60,
-  },
+
 
 });
 

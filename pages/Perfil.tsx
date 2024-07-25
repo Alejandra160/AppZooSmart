@@ -31,9 +31,7 @@ const PerfilScreen = () => {
         <TextInput style={styles.input} placeholder="EMAIL" placeholderTextColor="#000" />
         <TextInput style={styles.input} placeholder="DIRECCION (Calle, nm)" placeholderTextColor="#000" />
         <TextInput style={styles.input} placeholder="PASSWORD" placeholderTextColor="#000" secureTextEntry={true} />
-        <TouchableOpacity style={styles.updateButton}>
-          <Text style={styles.textRegularButton}>UPDATE ACCOUNT</Text>
-        </TouchableOpacity>
+    
         <TouchableOpacity style={styles.deleteButton}>
           <Text style={styles.textRegularButton}>DELETED ACCOUNT</Text>
         </TouchableOpacity>

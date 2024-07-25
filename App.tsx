@@ -9,7 +9,6 @@ import AquaticScreen from './pages/Aquatic';
 import LandScreen from './pages/Land';
 import BirdsScreen from './pages/Birds';
 import LoginPage from './pages/LoginPage';
-import CreateAccountScreen from './pages/HomePage';  
 import AddSpeciesScreen from './pages/AddSpecie';
 import ReptilisZoneScreen from './pages/MoreR';
 import AquaticZoneScreen from './pages/MoreA';
@@ -25,7 +24,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcom">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen} />
         <Stack.Screen name="CreateEmployee" component={CreateEmployeeScreen} />
@@ -34,7 +33,6 @@ const App = () => {
         <Stack.Screen name="Land" component={LandScreen} />
         <Stack.Screen name="Birds" component={BirdsScreen} />
         <Stack.Screen name="Login" component={LoginPage} />
-        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
         <Stack.Screen name="AddSpecie" component={AddSpeciesScreen} />
         <Stack.Screen name="ReptilisZone" component={ReptilisZoneScreen} />
         <Stack.Screen name="AquaticZone" component={AquaticZoneScreen} />

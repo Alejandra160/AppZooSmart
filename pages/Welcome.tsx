@@ -12,7 +12,6 @@ const WelcomeScreen = () => {
 
   let [fontsLoaded] = useFonts({
     
-   
     BreeSerif_400Regular
   
   });

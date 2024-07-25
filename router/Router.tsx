@@ -3,7 +3,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginPage from '../pages/LoginPage';
-import CreateAccountScreen from '../pages/HomePage';
 import WelcomeScreen from '../pages/Welcome';
 import PerfilScreen from '../pages/Perfil';
 import CreateEmployeeScreen from '../pages/CreateEmployee';
@@ -18,8 +17,7 @@ const Stack = createStackNavigator();
 const Router = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}initialRouteName="CreateAccount">
-      <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
+      <Stack.Navigator screenOptions={{headerShown:false}}initialRouteName="Login">
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen}/>
         <Stack.Screen name="Employees" component={CreateEmployeeScreen}/>
