@@ -3,9 +3,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions
 import { useNavigation } from '@react-navigation/native';
 import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
 
-
-
-
 const WelcomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
   const navigation = useNavigation();
@@ -15,11 +12,6 @@ const WelcomeScreen = () => {
     BreeSerif_400Regular
   
   });
-
- 
-
-
-  
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { minHeight: windowHeight }]}>

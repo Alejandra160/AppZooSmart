@@ -17,6 +17,8 @@ import LandZoneScreen from './pages/MoreL';
 import WelcomeEScreen from './pages/HomePageE';
 import PerfilEScreen from './pages/ProfilEmployee';
 import EmployeeZoneScreen from './pages/MoreEmployee';
+import TestPage from './pages/TestPage'; 
+
 
 
 const Stack = createStackNavigator();
@@ -24,7 +26,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Test">
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen} />
         <Stack.Screen name="CreateEmployee" component={CreateEmployeeScreen} />
@@ -41,6 +43,7 @@ const App = () => {
         <Stack.Screen name="WelcomeEmployee" component={WelcomeEScreen} />
         <Stack.Screen name="ProfilEmployee" component={PerfilEScreen} />
         <Stack.Screen name="EmployeeZone" component={EmployeeZoneScreen} />
+        <Stack.Screen name="Test" component={TestPage} /> 
 
 
 
