@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {  useFonts, Karla_800ExtraBold } from '@expo-google-fonts/karla';
+import { useFonts, Karla_800ExtraBold } from '@expo-google-fonts/karla';
+import { loginAdmin, loginEmployee } from '../services/Api';
+import { UserContext } from '../context/UserContext'; // Importa el contexto del usuario
 
 interface ModalComponentProps {
   visible: boolean;
@@ -11,17 +13,41 @@ interface ModalComponentProps {
 const ModalComponent: React.FC<ModalComponentProps> = ({ visible, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigation = useNavigation();
+  const { setUser } = useContext(UserContext); // Obtén el setUser del contexto
 
-  const handleLogin = () => {
-    // Aquí puedes agregar la lógica de autenticación, si es necesario
-    navigation.navigate('Welcome');
-    onClose();
+  const handleLogin = async () => {
+    setError('');
+    try {
+      const adminResponse = await loginAdmin({ email, password, isMobileApp: true });
+      if (adminResponse.user) {
+        setUser(adminResponse.user); // Guarda la información del admin en el contexto
+        navigation.navigate('Welcome');
+        onClose();
+        return;
+      }
+    } catch (err) {
+      console.log('No es admin, intentando como empleado');
+    }
+
+    try {
+      const employeeResponse = await loginEmployee({ email, password, isMobileApp: true });
+      if (employeeResponse.user) {
+        setUser(employeeResponse.user); // Guarda la información del empleado en el contexto
+        navigation.navigate('WelcomeEmployee');
+        onClose();
+        return;
+      }
+    } catch (err) {
+      setError('Correo o contraseña incorrectos');
+    }
   };
-  let [fontsLoaded] = useFonts({
 
-    Karla_800ExtraBold
-  });
+  let [fontsLoaded] = useFonts({
+    Karla_800ExtraBold,
+  });
+
   return (
     <Modal
       animationType="fade"
@@ -33,7 +59,9 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ visible, onClose }) => 
         <TouchableOpacity style={styles.modal} activeOpacity={1}>
           <View style={styles.modalContent}>
             <Text style={styles.textRegularButtons2}>Login</Text>
-            
+
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -54,7 +82,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ visible, onClose }) => 
               autoCapitalize="none"
             />
 
-            <TouchableOpacity  style={styles.closeButton}>
+            <TouchableOpacity onPress={handleLogin} style={styles.closeButton}>
               <Text style={styles.textRegularButtons2}>LOGIN</Text>
             </TouchableOpacity>
           </View>
@@ -90,17 +118,15 @@ const styles = StyleSheet.create({
   textRegularButtons2: {
     fontFamily: 'Karla_800ExtraBold',
     fontSize: 15,
-    color:'white'
+    color: 'white',
   },
   modalContent: {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  modalText: {
-    color: '#FFF',
-    marginBottom: 20,
-    fontSize: 18,
-    fontWeight: 'bold',
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
   },
   input: {
     width: '100%',

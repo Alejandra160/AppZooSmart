@@ -1,19 +1,51 @@
-import React, { useState } from 'react';
+// ReptilisScreen.tsx
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, ImageBackground, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
 import { Questrial_400Regular } from '@expo-google-fonts/questrial';
+import { getAnimalsByZone } from '../services/Api';
+import { UserContext } from '../context/UserContext';
 
-
-const ReptilisScreen = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+const ReptilisScreen: React.FC = () => {
+  const [animals, setAnimals] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error('useContext(UserContext) must be used within a UserProvider');
+  }
+
+  const { user } = context;
+
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const animalsData = await getAnimalsByZone('Reptilis');
+        setAnimals(animalsData);
+      } catch (error) {
+        console.error('Error fetching animals:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnimals();
+  }, []);
 
   let [fontsLoaded] = useFonts({
-    
     BreeSerif_400Regular,
-    Questrial_400Regular
-  });
+    Questrial_400Regular,
+  });
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ImageBackground source={require('../Images/ReptilisFondo.png')} style={styles.background}>
@@ -28,23 +60,15 @@ const ReptilisScreen = () => {
       <Text style={styles.subText}>SPECIES</Text>
 
       <ScrollView contentContainerStyle={styles.speciesContainer}>
-        <View style={styles.speciesBox}>
-          <Text style={styles.speciesName}>LEON</Text>
-          <Text style={styles.speciesDescription}>Descripcion</Text>
-          <TouchableOpacity style={styles.moreButton} onPress={() => navigation.navigate('ReptilisZone')}>
-            <Text style={styles.moreButtonText}>MORE</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.speciesBox}>
-          <Text style={styles.speciesName}>LEON</Text>
-          <Text style={styles.speciesDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
-          <TouchableOpacity style={styles.moreButton} onPress={() => navigation.navigate('ReptilisZone')}>
-            <Text style={styles.moreButtonText}>MORE</Text>
-          </TouchableOpacity>
-        </View>
+        {animals.map((animal) => (
+          <View key={animal.id} style={styles.speciesBox}>
+            <Text style={styles.speciesName}>{animal.nombre}</Text>
+            <Text style={styles.speciesDescription}>{animal.descripcion}</Text>
+            <TouchableOpacity style={styles.moreButton} onPress={() => navigation.navigate('ReptilisZone', { id: animal.id })}>
+              <Text style={styles.moreButtonText}>MORE</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
       </ScrollView>
     </ImageBackground>
   );
@@ -63,7 +87,7 @@ const styles = StyleSheet.create({
     top: 90,
     color: 'white',
     position: 'absolute',
-    fontFamily: 'BreeSerif_400Regular'
+    fontFamily: 'BreeSerif_400Regular',
   },
   addButton: {
     width: '50%',
@@ -72,13 +96,13 @@ const styles = StyleSheet.create({
     marginTop: 200,
     alignItems: 'center',
     backgroundColor: '#ffcf27',
-    zIndex: 1
+    zIndex: 1,
   },
   addButtonText: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize:18,
-    fontFamily:'BreeSerif_400Regular'
+    fontSize: 18,
+    fontFamily: 'BreeSerif_400Regular',
   },
   arrowContainer: {
     position: 'absolute',
@@ -94,18 +118,17 @@ const styles = StyleSheet.create({
     height: 20,
   },
   logoImage: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      width: 100,
-      height: 150,
-   
-    },
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 100,
+    height: 150,
+  },
   subText: {
     fontSize: 35,
     marginTop: 50,
     color: 'white',
-    fontFamily:'BreeSerif_400Regular',
+    fontFamily: 'BreeSerif_400Regular',
     alignSelf: 'center',
   },
   speciesContainer: {
@@ -124,7 +147,7 @@ const styles = StyleSheet.create({
   speciesName: {
     fontSize: 24,
     fontWeight: 'bold',
-    fontFamily:'BreeSerif_400Regular',
+    fontFamily: 'BreeSerif_400Regular',
     color: '#fff',
   },
   speciesDescription: {
@@ -132,7 +155,7 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 10,
     width: 300,
-    fontFamily:'Questrial_400Regular',
+    fontFamily: 'Questrial_400Regular',
     marginBottom: 60, // Espacio para el botón
   },
   moreButton: {
@@ -146,9 +169,18 @@ const styles = StyleSheet.create({
   },
   moreButtonText: {
     color: '#fff',
-    fontFamily:'BreeSerif_400Regular',
+    fontFamily: 'BreeSerif_400Regular',
     fontWeight: 'bold',
-  }
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 20,
+    fontFamily: 'BreeSerif_400Regular',
+  },
 });
 
 export default ReptilisScreen;

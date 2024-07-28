@@ -12,63 +12,13 @@ export const testAPI = async () => {
   }
 };
 
-interface AdminData {
-  name: string;
-  email: string;
-  password: string;
-  nameZoo: string;
-  country: string;
-  state: string;
-  city: string;
-  address: string;
-  isMobileApp: boolean;
-}
-
 interface LoginData {
   email: string;
   password: string;
   isMobileApp: boolean;
 }
 
-interface AnimalData {
-  nombre: string;
-  descripcion: string;
-  dieta: string;
-  info_adicional: string;
-  fecha_nacimiento: string;
-  fecha_arrivo: string;
-  zona: string;
-}
-
-interface EmployeeData {
-  name: string;
-  birthdate: string;
-  email: string;
-  password: string;
-  zone: string;
-  dateAdded: string;
-}
-
-interface ZooData {
-  name: string;
-  country: string;
-  state: string;
-  city: string;
-  address: string;
-  adminId: string;
-}
-
-// Admin routes
-export const createAdminAccount = async (adminData: AdminData) => {
-  try {
-    const response = await axios.post(`${API_URL}/admin/create-account`, adminData);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating admin account:', error);
-    throw error;
-  }
-};
-
+// Admin login
 export const loginAdmin = async (loginData: LoginData) => {
   try {
     const response = await axios.post(`${API_URL}/admin/login`, loginData);
@@ -79,40 +29,21 @@ export const loginAdmin = async (loginData: LoginData) => {
   }
 };
 
-export const getAdminById = async (adminId: string) => {
+// Obtener información del administrador
+export const getAdminInfo = async (adminId: string) => {
   try {
     const response = await axios.get(`${API_URL}/admin/api/admin/${adminId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching admin by ID:', error);
+    console.error('Error fetching admin info:', error);
     throw error;
   }
 };
 
-export const deleteAdmin = async (adminId: string) => {
-  try {
-    const response = await axios.delete(`${API_URL}/admin/${adminId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting admin:', error);
-    throw error;
-  }
-};
-
-// Animal routes
-export const createAnimal = async (animalData: AnimalData) => {
-  try {
-    const response = await axios.post(`${API_URL}/animal/create-animal`, animalData);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating animal:', error);
-    throw error;
-  }
-};
 
 export const getAnimalsByZoo = async () => {
   try {
-    const response = await axios.get(`${API_URL}/animal/byZoo`);
+    const response = await axios.get(`${API_URL}/animal/byZoo`, { withCredentials: true });
     return response.data;
   } catch (error) {
     console.error('Error fetching animals by zoo:', error);
@@ -120,47 +51,17 @@ export const getAnimalsByZoo = async () => {
   }
 };
 
-export const getAnimalById = async (animalId: string) => {
+export const getAnimalsByZone = async (zona: string) => {
   try {
-    const response = await axios.get(`${API_URL}/animal/${animalId}`);
+    const response = await axios.get(`${API_URL}/animal/byZone/${zona}`, { withCredentials: true });
     return response.data;
   } catch (error) {
-    console.error('Error fetching animal by ID:', error);
+    console.error('Error fetching animals by zone:', error);
     throw error;
   }
 };
 
-export const updateAnimal = async (animalId: string, updateData: Partial<AnimalData>) => {
-  try {
-    const response = await axios.put(`${API_URL}/animal/${animalId}`, updateData);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating animal:', error);
-    throw error;
-  }
-};
-
-export const deleteAnimal = async (animalId: string) => {
-  try {
-    const response = await axios.delete(`${API_URL}/animal/${animalId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting animal:', error);
-    throw error;
-  }
-};
-
-// Employee routes
-export const createEmployee = async (employeeData: EmployeeData) => {
-  try {
-    const response = await axios.post(`${API_URL}/empleado/create-employee`, employeeData);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating employee:', error);
-    throw error;
-  }
-};
-
+// Employee login
 export const loginEmployee = async (loginData: LoginData) => {
   try {
     const response = await axios.post(`${API_URL}/empleado/login`, loginData);
@@ -171,53 +72,62 @@ export const loginEmployee = async (loginData: LoginData) => {
   }
 };
 
-export const getCurrentEmployee = async () => {
+export const getAnimalsByZoneEMP = async (zone: string) => {
   try {
-    const response = await axios.get(`${API_URL}/empleado/current-employee`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching current employee:', error);
-    throw error;
-  }
-};
-
-export const getEmployeesByZone = async (zone: string) => {
-  try {
-    const response = await axios.get(`${API_URL}/empleado/zone/${zone}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching employees by zone:', error);
-    throw error;
-  }
-};
-
-export const deleteEmployee = async (employeeId: string) => {
-  try {
-    const response = await axios.delete(`${API_URL}/empleado/delete-employee/${employeeId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting employee:', error);
-    throw error;
-  }
-};
-
-export const getAnimalsByZone = async () => {
-  try {
-    const response = await axios.get(`${API_URL}/empleado/animales-zona`);
-    return response.data;
+    const response = await fetch(`${API_URL}/empleado/animaleszona-API?zona=${zone}`);
+    if (!response.ok) {
+      throw new Error('Error al obtener los animales por zona');
+    }
+    const animals = await response.json();
+    return animals;
   } catch (error) {
     console.error('Error fetching animals by zone:', error);
     throw error;
   }
 };
 
-// Zoo routes
-export const createZoo = async (zooData: ZooData) => {
+
+export const getAnimalByNumericId = async (id: string | number) => {
   try {
-    const response = await axios.post(`${API_URL}/zoo/api/create-zoo`, zooData);
-    return response.data;
+    const response = await fetch(`${API_URL}/animal/byId/${id}`);
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Animal no encontrado');
+      } else {
+        throw new Error('Error al obtener el animal');
+      }
+    }
+    const animal = await response.json();
+    return animal;
   } catch (error) {
-    console.error('Error creating zoo:', error);
+    console.error('Error fetching animal:', error);
+    throw error;
+  }
+};
+
+export const updateAnimalInfo = async (id: string | number, updatedInfo: any) => {
+  try {
+    console.log('Sending ID:', id); // Debugging line
+    console.log('Sending body:', updatedInfo); // Debugging line
+
+    const response = await fetch(`${API_URL}/animal/updateAnimalInfo/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedInfo),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Server responded with:', errorData); // Debugging line
+      throw new Error(errorData.message || 'Error al actualizar la información');
+    }
+
+    const animal = await response.json();
+    return animal;
+  } catch (error) {
+    console.error('Error updating animal info:', error);
     throw error;
   }
 };

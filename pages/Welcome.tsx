@@ -1,61 +1,68 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
+import { UserContext } from '../context/UserContext'; // Importa el contexto del usuario
 
 const WelcomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
   const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext); // Obtén el usuario y la función setUser del contexto
+
+  const handleLogout = () => {
+    setUser(null); // Elimina la información del usuario del contexto
+    navigation.navigate('Login'); // Redirige a la página de inicio de sesión
+  };
 
   let [fontsLoaded] = useFonts({
-    
-    BreeSerif_400Regular
-  
-  });
+    BreeSerif_400Regular,
+  });
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { minHeight: windowHeight }]}>
       <View style={styles.bannerContainer}>
         <Image source={require('../Images/FondoWelcome.png')} style={styles.bannerImage} />
-        <Text style={styles.textRegular}>WELCOME __________</Text>
+        <Text style={styles.textRegular}>WELCOME {user?.name}</Text> {/* Muestra el nombre del admin */}
       </View>
 
       <View style={styles.header}>
         <TouchableOpacity style={styles.profileButton} onPress={() => navigation.navigate('Perfil')}>
           <Text style={styles.textRegularButton}>PROFILE</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.textRegularButton}>LOGOUT</Text>
+        </TouchableOpacity>
       </View>
       
       <View style={styles.gridContainer}>
         <View style={styles.gridRow}>
           <TouchableOpacity style={[styles.gridItem, styles.reptiles]} onPress={() => navigation.navigate('Reptilis')}>
-          <Image source={require('../Images/ReptilisFondo.png')} style={styles.gridContainer} />
+            <Image source={require('../Images/ReptilisFondo.png')} style={styles.gridContainer} />
             <Text style={styles.textRegularSub}>REPTILIS</Text>
-            
             <Image source={require('../Images/REPTILIS.png')} style={styles.gridImage} />
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.gridItem, styles.aquatic]} onPress={() => navigation.navigate('Aquatic')}>
-          <Image source={require('../Images/AquaticFondo.png')} style={styles.gridContainer} />
+            <Image source={require('../Images/AquaticFondo.png')} style={styles.gridContainer} />
             <Text style={styles.textRegularSub}>AQUATIC</Text>
             <Image source={require('../Images/AQUATIC.png')} style={styles.gridImage} />
           </TouchableOpacity>
         </View>
         <View style={styles.gridRow}>
-        <TouchableOpacity style={[styles.gridItem, styles.birds]} onPress={() => navigation.navigate('Birds')}>
-        <Image source={require('../Images/BirdsFondo.png')} style={styles.gridContainer} />
+          <TouchableOpacity style={[styles.gridItem, styles.birds]} onPress={() => navigation.navigate('Birds')}>
+            <Image source={require('../Images/BirdsFondo.png')} style={styles.gridContainer} />
             <Text style={styles.textRegularSub}>BIRDS</Text>
             <Image source={require('../Images/BIRDS.png')} style={styles.gridImage} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.gridItem, styles.land]} onPress={() => navigation.navigate('Land')}>
-          <Image source={require('../Images/LandFondo.png')} style={styles.gridContainer} />
+            <Image source={require('../Images/LandFondo.png')} style={styles.gridContainer} />
             <Text style={styles.textRegularSub}>LAND</Text>
             <Image source={require('../Images/LAND.png')} style={styles.gridImage} />
           </TouchableOpacity>
         </View>
         <View style={styles.gridRow}>
           <TouchableOpacity style={[styles.gridItem, styles.createEmployee]} onPress={() => navigation.navigate('CreateEmployee')}>
-          <Image source={require('../Images/EmployeeFondo.png')} style={styles.gridContainer} />
+            <Image source={require('../Images/EmployeeFondo.png')} style={styles.gridContainer} />
             <Text style={styles.textRegularSub}>+CREATE EMPLOYEE</Text>
           </TouchableOpacity>
         </View>
@@ -85,16 +92,24 @@ const styles = StyleSheet.create({
     top: 35,
     right: 20,
     zIndex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   profileButton: {
     backgroundColor: '#18b8bf',
     padding: 13,
     borderRadius: 5,
+    marginRight: 10,
+  },
+  logoutButton: {
+    backgroundColor: '#ff4c4c',
+    padding: 13,
+    borderRadius: 5,
   },
   textRegularButton: {
     color: '#FFFFFF',
-    fontWeight:'600',
-    fontFamily:'BreeSerif_400Regular'
+    fontWeight: '600',
+    fontFamily: 'BreeSerif_400Regular',
   },
   gridContainer: {
     width: '100%',
@@ -153,17 +168,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFFFF',
   },
-    textRegularSub: {
-      fontFamily: 'BreeSerif_400Regular ',
-      color: '#FFFFFF',
-      fontWeight:'600',
-      fontSize: 30,
-      position: 'absolute',
-      top: 10,
-    },
-    
-   
-
+  textRegularSub: {
+    fontFamily: 'BreeSerif_400Regular',
+    color: '#FFFFFF',
+    fontWeight: '600',
+    fontSize: 30,
+    position: 'absolute',
+    top: 10,
+  },
 });
 
 export default WelcomeScreen;

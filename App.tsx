@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { UserProvider } from './context/UserContext'; // USERINFO
 import WelcomeScreen from './pages/Welcome';
 import PerfilScreen from './pages/Perfil';
 import CreateEmployeeScreen from './pages/CreateEmployee';
@@ -25,8 +26,9 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
+  <UserProvider>
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Test">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Perfil" component={PerfilScreen} />
         <Stack.Screen name="CreateEmployee" component={CreateEmployeeScreen} />
@@ -50,6 +52,7 @@ const App = () => {
 
       </Stack.Navigator>
     </NavigationContainer>
+  </UserProvider>
   );
 };
 

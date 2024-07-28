@@ -1,47 +1,74 @@
-import React, { useState } from 'react';
+// LandScreen.tsx
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, ImageBackground, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
 import { Questrial_400Regular } from '@expo-google-fonts/questrial';
+import { getAnimalsByZone } from '../services/Api';
+import { UserContext } from '../context/UserContext';
 
-const LandScreen = () => {
+const LandScreen: React.FC = () => {
+  const [animals, setAnimals] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error('useContext(UserContext) must be used within a UserProvider');
+  }
+
+  const { user } = context;
+
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const animalsData = await getAnimalsByZone('Land');
+        setAnimals(animalsData);
+      } catch (error) {
+        console.error('Error fetching animals:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnimals();
+  }, []);
 
   let [fontsLoaded] = useFonts({
+    BreeSerif_400Regular,
     Questrial_400Regular,
-    BreeSerif_400Regular
-  });
+  });
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ImageBackground source={require('../Images/LandFondo.png')} style={styles.background}>
       <TouchableOpacity style={styles.arrowContainer} onPress={() => navigation.goBack()}>
         <Image source={require('../Images/arrowButton.png')} style={styles.arrowImage} />
       </TouchableOpacity>
-      <Image source={require('../Images/LogoS.png')} style={styles.LogoImage} />
-      <Text style={styles.TitleText}>LAND ZONE</Text>
+      <Image source={require('../Images/LogoS.png')} style={styles.logoImage} />
+      <Text style={styles.titleText}>LAND ZONE</Text>
       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddSpecie')}>
         <Text style={styles.addButtonText}>+ ADD SPECIES</Text>
       </TouchableOpacity>
-      <Text style={styles.SubText}>SPECIES</Text>
+      <Text style={styles.subText}>SPECIES</Text>
 
       <ScrollView contentContainerStyle={styles.speciesContainer}>
-        <View style={styles.speciesBox}>
-          <Text style={styles.speciesName}>LEON</Text>
-          <Text style={styles.speciesDescription}>Descripcion</Text>
-          <TouchableOpacity style={styles.moreButton}onPress={() => navigation.navigate('LandZone')}>
-            <Text style={styles.moreButtonText}>MORE</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.speciesBox}>
-          <Text style={styles.speciesName}>LEON</Text>
-          <Text style={styles.speciesDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
-          <TouchableOpacity style={styles.moreButton}onPress={() => navigation.navigate('LandZone')}>
-            <Text style={styles.moreButtonText}>MORE</Text>
-          </TouchableOpacity>
-        </View>
+        {animals.map((animal) => (
+          <View key={animal.id} style={styles.speciesBox}>
+            <Text style={styles.speciesName}>{animal.nombre}</Text>
+            <Text style={styles.speciesDescription}>{animal.descripcion}</Text>
+            <TouchableOpacity style={styles.moreButton} onPress={() => navigation.navigate('LandZone', { id: animal.id })}>
+              <Text style={styles.moreButtonText}>MORE</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
       </ScrollView>
     </ImageBackground>
   );
@@ -55,12 +82,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  TitleText: {
+  titleText: {
     fontSize: 50,
     top: 90,
-    fontFamily:'BreeSerif_400Regular',
     color: 'white',
     position: 'absolute',
+    fontFamily: 'BreeSerif_400Regular',
   },
   addButton: {
     width: '50%',
@@ -74,8 +101,8 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: 'black',
     fontWeight: 'bold',
-    fontFamily:'BreeSerif_400Regular',
-    fontSize:18
+    fontSize: 18,
+    fontFamily: 'BreeSerif_400Regular',
   },
   arrowContainer: {
     position: 'absolute',
@@ -90,18 +117,18 @@ const styles = StyleSheet.create({
     width: 30,
     height: 20,
   },
-  LogoImage: {
+  logoImage: {
     position: 'absolute',
     top: 0,
     right: 0,
     width: 100,
     height: 150,
   },
-  SubText: {
+  subText: {
     fontSize: 35,
     marginTop: 50,
     color: 'white',
-    fontFamily:'BreeSerif_400Regular',
+    fontFamily: 'BreeSerif_400Regular',
     alignSelf: 'center',
   },
   speciesContainer: {
@@ -119,16 +146,16 @@ const styles = StyleSheet.create({
   },
   speciesName: {
     fontSize: 24,
-    fontFamily:'BreeSerif_400Regular',
     fontWeight: 'bold',
+    fontFamily: 'BreeSerif_400Regular',
     color: '#fff',
   },
   speciesDescription: {
     fontSize: 16,
     color: 'black',
-    fontFamily:'Questrial_400Regular',
     marginTop: 10,
     width: 300,
+    fontFamily: 'Questrial_400Regular',
     marginBottom: 60, // Espacio para el botón
   },
   moreButton: {
@@ -142,8 +169,17 @@ const styles = StyleSheet.create({
   },
   moreButtonText: {
     color: '#fff',
-    fontFamily:'BreeSerif_400Regular',
+    fontFamily: 'BreeSerif_400Regular',
     fontWeight: 'bold',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 20,
+    fontFamily: 'BreeSerif_400Regular',
   },
 });
 

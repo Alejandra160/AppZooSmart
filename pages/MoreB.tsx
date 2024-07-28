@@ -1,56 +1,89 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { getAnimalByNumericId } from '../services/Api';  // Asegúrate de que la ruta es correcta
+
+type BirdsZoneScreenRouteProp = RouteProp<{ params: { id: string } }, 'params'>;
 
 const BirdsZoneScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute<BirdsZoneScreenRouteProp>();
+  const { id } = route.params;
+
+  const [animal, setAnimal] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAnimal = async () => {
+      try {
+        console.log(`Fetching animal with ID: ${id}`);  // Depuración
+        const animalData = await getAnimalByNumericId(id);
+        console.log('Animal Data:', animalData);  // Depuración
+        setAnimal(animalData);
+        setError(null);
+      } catch (error) {
+        console.error('Error fetching animal:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnimal();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  if (!animal) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Animal no encontrado</Text>
+      </View>
+    );
+  }
 
   return (
-    
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      
-    <ImageBackground source={require('../Images/BirdsFondo.png')} style={styles.background}>
-    
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-      
-        <Text style={styles.backButtonText}>BACK</Text>
-        
-      </TouchableOpacity>
-      <Text style={styles.title}>BIRDS ZONE</Text>
-      
-      
+      <ImageBackground source={require('../Images/BirdsFondo.png')} style={styles.background}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>BACK</Text>
+        </TouchableOpacity>
+        <Text style={styles.title}>BIRDS ZONE</Text>
+
         <View style={styles.detailsContainer}>
-          <Text style={styles.detailText}>Age: --- Birthdate: ---- ArriveDate: -----</Text>
+          <Text style={styles.detailText}>Age: {animal.edad?.años} years, {animal.edad?.meses} months, {animal.edad?.dias} days</Text>
+          <Text style={styles.detailText}>Birthdate: {new Date(animal.fecha_nacimiento).toLocaleDateString()}</Text>
+          <Text style={styles.detailText}>ArriveDate: {new Date(animal.fecha_arrivo).toLocaleDateString()}</Text>
         </View>
-        
+
         <View style={styles.infoContainer}>
-          <Text style={styles.animalName}>LEON</Text>
-          <Text style={styles.infoText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
+          <Text style={styles.animalName}>{animal.nombre}</Text>
+          <Text style={styles.infoText}>{animal.descripcion}</Text>
           
           <Text style={styles.sectionTitle}>Diet</Text>
-          <Text style={styles.infoText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
+          <Text style={styles.infoText}>{animal.dieta}</Text>
           
           <Text style={styles.sectionTitle}>Additional data</Text>
-          <Text style={styles.infoText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
+          <Text style={styles.infoText}>{animal.info_adicional}</Text>
           
-          <Text style={styles.deletedText}>DELETED</Text>
+          {animal.deleted && <Text style={styles.deletedText}>DELETED</Text>}
         </View>
-        
-        <View style={styles.employeeContainer}>
-          <Text style={styles.employeeTitle}>EMPLOYEE</Text>
-          {['VALERIA', 'FERNANDA', 'ALEJANDRA', 'JAVIER'].map((employee, index) => (
-            <View key={index} style={styles.employeeRow}>
-              <Text style={styles.employeeName}>{employee}</Text>
-            </View>
-          ))}
-        </View>
-        
+
         <View style={styles.chartContainer}>
           <View style={styles.chartTitleContainer}>
             <Text style={styles.chartTitle}>DispenserFoodZoo</Text>
@@ -60,12 +93,11 @@ const BirdsZoneScreen = () => {
             <Text>Chart goes here</Text>
           </View>
         </View>
-        
+
         <TouchableOpacity style={styles.changeHourButton}>
           <Text style={styles.changeHourButtonText}>CHANGE HOUR</Text>
         </TouchableOpacity>
- 
-    </ImageBackground>
+      </ImageBackground>
     </ScrollView>
   );
 };
@@ -84,7 +116,6 @@ const styles = StyleSheet.create({
     right: 0,
     width: 100,
     height: 150,
- 
   },
   backButton: {
     position: 'absolute',
@@ -150,34 +181,6 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 20,
   },
-  employeeContainer: {
-    backgroundColor: '#c727ff',
-    padding: 10,
-    borderRadius: 10,
-    marginTop: 20,
-    width: '90%',
-  },
-  employeeTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: 'black',
-  },
-  employeeRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 5,
-  },
-  employeeName: {
-    fontSize: 16,
-    color: 'black',
-  },
-  deleteIcon: {
-    fontSize: 16,
-    color: '#FFFFFF',
-  },
   chartContainer: {
     marginTop: '5%',
     alignItems: 'center',
@@ -210,6 +213,24 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 20,
+    fontFamily: 'BreeSerif_400Regular',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 20,
+    color: 'red',
   },
 });
 

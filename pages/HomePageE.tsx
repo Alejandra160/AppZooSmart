@@ -1,17 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
+import { Questrial_400Regular } from '@expo-google-fonts/questrial';
+import { getAnimalsByZoneEMP } from '../services/Api';  // Asegúrate de que la ruta es correcta
+import { UserContext } from '../context/UserContext';
 
 const WelcomeEScreen = () => {
-  const windowHeight = Dimensions.get('window').height;
+  const [animals, setAnimals] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const { user } = useContext(UserContext);
+  const windowHeight = Dimensions.get('window').height;
+
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const animalsData = await getAnimalsByZoneEMP(user?.zone || ''); // Pasar la zona del usuario
+        setAnimals(animalsData);
+      } catch (error) {
+        console.error('Error fetching animals:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnimals();
+  }, [user?.zone]);
+
+  let [fontsLoaded] = useFonts({
+    BreeSerif_400Regular,
+    Questrial_400Regular,
+  });
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { minHeight: windowHeight }]}>
       <View style={styles.bannerContainer}>
         <Image source={require('../Images/FondoWelcomeE.png')} style={styles.bannerImage} />
         <Image source={require('../Images/logoH.png')} style={styles.LogoImage} />
-        <Text style={styles.welcomeText}>WELCOME EMPLOYEE</Text>
+        <Text style={styles.welcomeText}>WELCOME {user?.name.toUpperCase()}</Text>
+        <Text style={styles.zoneText}>ZONE: {user?.zone.toUpperCase()}</Text>
       </View>
 
       <View style={styles.header}>
@@ -21,22 +57,15 @@ const WelcomeEScreen = () => {
       </View>
 
       <View style={styles.contentContainer}>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>LEON</Text>
-          <Text style={styles.cardDescription}>Description</Text>
-          <TouchableOpacity style={styles.moreButton} onPress={() => navigation.navigate('EmployeeZone')}>
-            <Text style={styles.moreButtonText}>MORE</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>LEON</Text>
-          <Text style={styles.cardDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
-          <TouchableOpacity style={styles.moreButton} onPress={() => navigation.navigate('EmployeeZone')}>
-            <Text style={styles.moreButtonText}>MORE</Text>
-          </TouchableOpacity>
-        </View>
+        {animals.map((animal) => (
+          <View key={animal.id} style={styles.card}>
+            <Text style={styles.cardTitle}>{animal.nombre}</Text>
+            <Text style={styles.cardDescription}>{animal.descripcion}</Text>
+            <TouchableOpacity style={styles.moreButton} onPress={() => navigation.navigate('EmployeeZone', { id: animal.id })}>
+              <Text style={styles.moreButtonText}>MORE</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
       </View>
     </ScrollView>
   );
@@ -60,13 +89,22 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     position: 'absolute',
-    top: '50%',
+    top: '40%',
     left: '50%',
     transform: [{ translateX: -105 }, { translateY: -10 }],
     fontSize: 24,
     fontWeight: 'bold',
     color: '#FFFFFF',
-    fontFamily: 'BreeSerif',
+    fontFamily: 'BreeSerif_400Regular',
+  },
+  zoneText: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -50 }, { translateY: -10 }],
+    fontSize: 20,
+    color: '#FFFFFF',
+    fontFamily: 'Questrial_400Regular',
   },
   header: {
     position: 'absolute',
@@ -121,6 +159,15 @@ const styles = StyleSheet.create({
   moreButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 20,
+    fontFamily: 'BreeSerif_400Regular',
   },
 });
 
