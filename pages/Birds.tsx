@@ -22,9 +22,15 @@ const BirdsScreen: React.FC = () => {
     const fetchAnimals = async () => {
       try {
         const animalsData = await getAnimalsByZone('Birds');
-        setAnimals(animalsData);
+        if (Array.isArray(animalsData)) {
+          setAnimals(animalsData);
+        } else {
+          console.error('Invalid data format:', animalsData);
+          setAnimals([]); // Asegurarse de que animals siempre sea un array
+        }
       } catch (error) {
         console.error('Error fetching animals:', error);
+        setAnimals([]); // Asegurarse de que animals siempre sea un array
       } finally {
         setLoading(false);
       }
@@ -53,9 +59,7 @@ const BirdsScreen: React.FC = () => {
       </TouchableOpacity>
       <Image source={require('../Images/LogoS.png')} style={styles.logoImage} />
       <Text style={styles.titleText}>BIRDS ZONE</Text>
-      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddSpecie')}>
-        <Text style={styles.addButtonText}>+ ADD SPECIES</Text>
-      </TouchableOpacity>
+
       <Text style={styles.subText}>SPECIES</Text>
 
       <ScrollView contentContainerStyle={styles.speciesContainer}>
@@ -83,24 +87,9 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 50,
-    top: 90,
+    top: 50,
     color: 'white',
     position: 'absolute',
-    fontFamily: 'BreeSerif_400Regular',
-  },
-  addButton: {
-    width: '50%',
-    padding: 20,
-    borderRadius: 40,
-    marginTop: 200,
-    alignItems: 'center',
-    backgroundColor: '#ffcf27',
-    zIndex: 1,
-  },
-  addButtonText: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 18,
     fontFamily: 'BreeSerif_400Regular',
   },
   arrowContainer: {
@@ -125,7 +114,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: 35,
-    marginTop: 50,
+    marginTop: 110,
     color: 'white',
     fontFamily: 'BreeSerif_400Regular',
     alignSelf: 'center',

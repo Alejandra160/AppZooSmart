@@ -26,9 +26,7 @@ const WelcomeScreen = () => {
       </View>
 
       <View style={styles.header}>
-        <TouchableOpacity style={styles.profileButton} onPress={() => navigation.navigate('Perfil')}>
-          <Text style={styles.textRegularButton}>PROFILE</Text>
-        </TouchableOpacity>
+      
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.textRegularButton}>LOGOUT</Text>
         </TouchableOpacity>
@@ -63,7 +61,7 @@ const WelcomeScreen = () => {
         <View style={styles.gridRow}>
           <TouchableOpacity style={[styles.gridItem, styles.createEmployee]} onPress={() => navigation.navigate('CreateEmployee')}>
             <Image source={require('../Images/EmployeeFondo.png')} style={styles.gridContainer} />
-            <Text style={styles.textRegularSub}>+CREATE EMPLOYEE</Text>
+            <Text style={styles.textRegularSub}>+CHECK THE WEB PAGE</Text>
           </TouchableOpacity>
         </View>
       </View>

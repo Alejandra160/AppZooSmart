@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.3.3:3000/api';
+const API_URL = 'http://10.100.0.176:3000/api'; // Asegúrate de que la URL tenga el protocolo correcto
 
 export const testAPI = async () => {
   try {
@@ -39,7 +39,6 @@ export const getAdminInfo = async (adminId: string) => {
     throw error;
   }
 };
-
 
 export const getAnimalsByZoo = async () => {
   try {
@@ -85,7 +84,6 @@ export const getAnimalsByZoneEMP = async (zone: string) => {
     throw error;
   }
 };
-
 
 export const getAnimalByNumericId = async (id: string | number) => {
   try {

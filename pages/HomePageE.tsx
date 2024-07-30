@@ -10,7 +10,7 @@ const WelcomeEScreen = () => {
   const [animals, setAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext); // Agrega setUser para poder limpiar los datos del usuario
   const windowHeight = Dimensions.get('window').height;
 
   useEffect(() => {
@@ -27,6 +27,11 @@ const WelcomeEScreen = () => {
 
     fetchAnimals();
   }, [user?.zone]);
+
+  const handleLogout = () => {
+    setUser(null); // Limpiar los datos del usuario del contexto
+    navigation.navigate('Login'); // Redirigir a la pantalla de inicio de sesión
+  };
 
   let [fontsLoaded] = useFonts({
     BreeSerif_400Regular,
@@ -51,8 +56,8 @@ const WelcomeEScreen = () => {
       </View>
 
       <View style={styles.header}>
-        <TouchableOpacity style={styles.profileButton} onPress={() => navigation.navigate('ProfilEmployee')}>
-          <Text style={styles.profileText}>PROFILE</Text>
+        <TouchableOpacity style={styles.profileButton} onPress={handleLogout}>
+          <Text style={styles.profileText}>LOG OUT</Text>
         </TouchableOpacity>
       </View>
 
