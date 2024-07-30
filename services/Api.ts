@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://10.100.0.176:3000/api'; // Asegúrate de que la URL tenga el protocolo correcto
+const API_URL = 'http://10.100.0.176:3000/api'; //URL
 
 export const testAPI = async () => {
   try {
@@ -126,6 +126,17 @@ export const updateAnimalInfo = async (id: string | number, updatedInfo: any) =>
     return animal;
   } catch (error) {
     console.error('Error updating animal info:', error);
+    throw error;
+  }
+};
+
+// ESP32
+export const sendDataToESP32 = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}/sendToESP32`, { data });
+    return response.data;
+  } catch (error) {
+    console.error('Error sending data to ESP32:', error);
     throw error;
   }
 };

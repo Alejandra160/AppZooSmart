@@ -84,18 +84,8 @@ const BirdsZoneScreen = () => {
           {animal.deleted && <Text style={styles.deletedText}>DELETED</Text>}
         </View>
 
-        <View style={styles.chartContainer}>
-          <View style={styles.chartTitleContainer}>
-            <Text style={styles.chartTitle}>DispenserFoodZoo</Text>
-          </View>
-          {/* Aquí puedes agregar tu componente de gráfica */}
-          <View style={styles.chart}>
-            <Text>Chart goes here</Text>
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.changeHourButton}>
-          <Text style={styles.changeHourButtonText}>CHANGE HOUR</Text>
+        <TouchableOpacity style={styles.changeHourButton}onPress={() => navigation.navigate('Dispenser')}>
+          <Text style={styles.changeHourButtonText}>ZooDispenser</Text>
         </TouchableOpacity>
       </ImageBackground>
     </ScrollView>
