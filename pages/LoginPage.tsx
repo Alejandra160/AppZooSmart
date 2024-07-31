@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
       source={require('../Images/index.png')}
       style={styles.background}
     >
-      <View style={styles.overlay} />
+      <View style={styles.overlay} >
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
 
        
       </ScrollView>
-
+      </View>
       <ModalComponent visible={modalVisible} onClose={closeModal} />
     </ImageBackground>
   );

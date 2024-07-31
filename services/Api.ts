@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.127:3000/api'; //URL
+const API_URL = 'https://serverapifinal.onrender.com/api'; // URL
 
 export const testAPI = async () => {
   try {
@@ -18,7 +18,7 @@ interface LoginData {
   isMobileApp: boolean;
 }
 
-// Admin login
+// Admin login api
 export const loginAdmin = async (loginData: LoginData) => {
   try {
     const response = await axios.post(`${API_URL}/admin/login`, loginData);
@@ -39,21 +39,21 @@ export const getAdminInfo = async (adminId: string) => {
   }
 };
 
-//Obtener los animales por zoo
-
+// Obtener los animales por zoo
 export const getAnimalsByZoo = async () => {
   try {
-    const response = await axios.get(`${API_URL}/animal/byZoo`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/animal/byZoo`);
     return response.data;
   } catch (error) {
     console.error('Error fetching animals by zoo:', error);
     throw error;
   }
 };
-//Obtener los animales por zona
+
+// Obtener los animales por zona
 export const getAnimalsByZone = async (zona: string) => {
   try {
-    const response = await axios.get(`${API_URL}/animal/byZone/${zona}`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/animal/byZone/${zona}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching animals by zone:', error);
@@ -72,7 +72,7 @@ export const loginEmployee = async (loginData: LoginData) => {
   }
 };
 
-//Animales del empleado
+// Animales del empleado
 export const getAnimalsByZoneEMP = async (zone: string) => {
   try {
     const response = await fetch(`${API_URL}/empleado/animaleszona-API?zona=${zone}`);
@@ -87,8 +87,7 @@ export const getAnimalsByZoneEMP = async (zone: string) => {
   }
 };
 
-//id animal
-
+// Obtener animal por ID numérico
 export const getAnimalByNumericId = async (id: string | number) => {
   try {
     const response = await fetch(`${API_URL}/animal/byId/${id}`);
@@ -107,7 +106,7 @@ export const getAnimalByNumericId = async (id: string | number) => {
   }
 };
 
-//Actualizar info animales
+// Actualizar info animales
 export const updateAnimalInfo = async (id: string | number, updatedInfo: any) => {
   try {
     console.log('Sending ID:', id); // Debugging line
@@ -124,7 +123,7 @@ export const updateAnimalInfo = async (id: string | number, updatedInfo: any) =>
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server responded with:', errorData); // Debugging line
-      throw new Error(errorData.message || 'Error al actualizar la información'); //Debugging line
+      throw new Error(errorData.message || 'Error al actualizar la información'); // Debugging line
     }
 
     const animal = await response.json();
