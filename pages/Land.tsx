@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    fontSize: 50,
+    fontSize: 35,
     top: 50,
     color: 'white',
     position: 'absolute',
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     height: 150,
   },
   subText: {
-    fontSize: 35,
+    fontSize: 30,
     marginTop: 110,
     color: 'white',
     fontFamily: 'BreeSerif_400Regular',

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://10.100.0.176:3000/api'; //URL
+const API_URL = 'http://192.168.1.127:3000/api'; //URL
 
 export const testAPI = async () => {
   try {
@@ -24,12 +24,11 @@ export const loginAdmin = async (loginData: LoginData) => {
     const response = await axios.post(`${API_URL}/admin/login`, loginData);
     return response.data;
   } catch (error) {
-    console.error('Error logging in admin:', error);
     throw error;
   }
 };
 
-// Obtener información del administrador
+// Obtener info del admin
 export const getAdminInfo = async (adminId: string) => {
   try {
     const response = await axios.get(`${API_URL}/admin/api/admin/${adminId}`);
@@ -40,6 +39,8 @@ export const getAdminInfo = async (adminId: string) => {
   }
 };
 
+//Obtener los animales por zoo
+
 export const getAnimalsByZoo = async () => {
   try {
     const response = await axios.get(`${API_URL}/animal/byZoo`, { withCredentials: true });
@@ -49,7 +50,7 @@ export const getAnimalsByZoo = async () => {
     throw error;
   }
 };
-
+//Obtener los animales por zona
 export const getAnimalsByZone = async (zona: string) => {
   try {
     const response = await axios.get(`${API_URL}/animal/byZone/${zona}`, { withCredentials: true });
@@ -71,6 +72,7 @@ export const loginEmployee = async (loginData: LoginData) => {
   }
 };
 
+//Animales del empleado
 export const getAnimalsByZoneEMP = async (zone: string) => {
   try {
     const response = await fetch(`${API_URL}/empleado/animaleszona-API?zona=${zone}`);
@@ -84,6 +86,8 @@ export const getAnimalsByZoneEMP = async (zone: string) => {
     throw error;
   }
 };
+
+//id animal
 
 export const getAnimalByNumericId = async (id: string | number) => {
   try {
@@ -103,6 +107,7 @@ export const getAnimalByNumericId = async (id: string | number) => {
   }
 };
 
+//Actualizar info animales
 export const updateAnimalInfo = async (id: string | number, updatedInfo: any) => {
   try {
     console.log('Sending ID:', id); // Debugging line
@@ -119,24 +124,13 @@ export const updateAnimalInfo = async (id: string | number, updatedInfo: any) =>
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Server responded with:', errorData); // Debugging line
-      throw new Error(errorData.message || 'Error al actualizar la información');
+      throw new Error(errorData.message || 'Error al actualizar la información'); //Debugging line
     }
 
     const animal = await response.json();
     return animal;
   } catch (error) {
     console.error('Error updating animal info:', error);
-    throw error;
-  }
-};
-
-// ESP32
-export const sendDataToESP32 = async (data) => {
-  try {
-    const response = await axios.post(`${API_URL}/sendToESP32`, { data });
-    return response.data;
-  } catch (error) {
-    console.error('Error sending data to ESP32:', error);
     throw error;
   }
 };

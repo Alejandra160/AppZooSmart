@@ -4,11 +4,10 @@ import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import Welcome from "../pages/Welcome";
 import PerfilScreen from "../pages/Perfil";
-import CreateEmployeeScreen from "../pages/CreateEmployee";
 import ReptilisScreen from "../pages/Reptilis";
 import AquaticScreen from "../pages/Aquatic";
 import LandScreen from "../pages/Land";
-import AddSpeciesScreen from "../pages/AddSpecie";
+
 
 
 
@@ -19,10 +18,8 @@ function AuthStack() {
     <Stack.Navigator screenOptions={{headerShown:false}}>
       <Stack.Screen name="Login" component={LoginPage}/>
       <Stack.Screen name="Home" component={HomePage}/>
-      <Stack.Screen name="AddSpecie" component={AddSpeciesScreen}/>
       <Stack.Screen name="Welcome" component={Welcome}/>
       <Stack.Screen name="Perfil" component={PerfilScreen}/>
-      <Stack.Screen name="Employees" component={CreateEmployeeScreen}/>
       <Stack.Screen name="Reptilis" component={ReptilisScreen}/>
       <Stack.Screen name="Aquatic" component={AquaticScreen}/>
       <Stack.Screen name="Land" component={LandScreen}/>

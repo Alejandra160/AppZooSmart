@@ -83,10 +83,6 @@ const BirdsZoneScreen = () => {
           
           {animal.deleted && <Text style={styles.deletedText}>DELETED</Text>}
         </View>
-
-        <TouchableOpacity style={styles.changeHourButton}onPress={() => navigation.navigate('Dispenser')}>
-          <Text style={styles.changeHourButtonText}>ZooDispenser</Text>
-        </TouchableOpacity>
       </ImageBackground>
     </ScrollView>
   );
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: '100%',
-    height: '12%',
+    height: 1000,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

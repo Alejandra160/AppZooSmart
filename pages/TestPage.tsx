@@ -12,7 +12,7 @@ const TestPage: React.FC = () => {
         const data = await testAPI();
         setMessage(data.message);
       } catch (error) {
-        setMessage('AQUI Error al conectar con la API');
+        setMessage('Error al conectar con la API');
       } finally {
         setLoading(false);
       }

@@ -84,9 +84,6 @@ const AquaticZoneScreen = () => {
           {animal.deleted && <Text style={styles.deletedText}>DELETED</Text>}
         </View>
 
-        <TouchableOpacity style={styles.changeHourButton}onPress={() => navigation.navigate('AquaS')}>
-          <Text style={styles.changeHourButtonText}>AquaSmart</Text>
-        </TouchableOpacity>
       </ImageBackground>
     </ScrollView>
   );
@@ -96,7 +93,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: '100%',
-    height: '12%',
+    height: 1000,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

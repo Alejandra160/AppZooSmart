@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    fontSize: 50,
+    fontSize: 35,
     top: 50,
     color: 'white',
     position: 'absolute',

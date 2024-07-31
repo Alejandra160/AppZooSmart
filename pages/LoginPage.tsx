@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import {Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import ModalComponent from './ModalComponent';
 import { useNavigation } from '@react-navigation/native';
 import {LilitaOne_400Regular, useFonts } from '@expo-google-fonts/lilita-one';
 import {  Karla_800ExtraBold } from '@expo-google-fonts/karla';
-
+import View from '../components/view';
 
 const LoginPage: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);

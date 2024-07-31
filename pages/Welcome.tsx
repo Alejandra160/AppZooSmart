@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useFonts, BreeSerif_400Regular } from '@expo-google-fonts/bree-serif';
 import { UserContext } from '../context/UserContext'; // Importa el contexto del usuario
+import View from '../components/view';
 
 const WelcomeScreen = () => {
   const windowHeight = Dimensions.get('window').height;
@@ -22,7 +23,7 @@ const WelcomeScreen = () => {
     <ScrollView contentContainerStyle={[styles.container, { minHeight: windowHeight }]}>
       <View style={styles.bannerContainer}>
         <Image source={require('../Images/FondoWelcome.png')} style={styles.bannerImage} />
-        <Text style={styles.textRegular}>WELCOME {user?.name}</Text> {/* Muestra el nombre del admin */}
+        <Text style={styles.textRegular}>WELCOME {user?.name}</Text> {/* Admin name */}
       </View>
 
       <View style={styles.header}>
@@ -55,11 +56,11 @@ const WelcomeScreen = () => {
           <TouchableOpacity style={[styles.gridItem, styles.land]} onPress={() => navigation.navigate('Land')}>
             <Image source={require('../Images/LandFondo.png')} style={styles.gridContainer} />
             <Text style={styles.textRegularSub}>LAND</Text>
-            <Image source={require('../Images/LAND.png')} style={styles.gridImage} />
+            <Image source={require('../Images/Lion.png')} style={styles.gridImageLion} />
           </TouchableOpacity>
         </View>
         <View style={styles.gridRow}>
-          <TouchableOpacity style={[styles.gridItem, styles.createEmployee]} onPress={() => navigation.navigate('CreateEmployee')}>
+          <TouchableOpacity style={[styles.gridItem, styles.createEmployee]}>
             <Image source={require('../Images/EmployeeFondo.png')} style={styles.gridContainer} />
             <Text style={styles.textRegularSub}>+CHECK THE WEB PAGE</Text>
           </TouchableOpacity>
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     width: '100%',
+    marginTop:-10,
     flex: 1,
   },
   gridRow: {
@@ -130,6 +132,14 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     position: 'absolute',
     bottom: 10,
+  },
+  gridImageLion: {
+    width: '120%',
+    height: '80%',
+    resizeMode: 'contain',
+    position: 'absolute',
+    bottom:-30
+
   },
   reptiles: {
     backgroundColor: '#84AE1B',

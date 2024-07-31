@@ -14,9 +14,7 @@ import BirdsZoneScreen from './pages/MoreB';
 import LandZoneScreen from './pages/MoreL';
 import WelcomeEScreen from './pages/HomePageE';
 import EmployeeZoneScreen from './pages/MoreEmployee';
-import TestPage from './pages/TestPage'; 
-import DispenserScreen from './pages/Dispenser';
-import AquaSScreen from './pages/AquaS';
+import TestPage from './pages/TestPage'; //PRUEBA API
 
 
 
@@ -26,10 +24,8 @@ const App = () => {
   return (
   <UserProvider>
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Dispenser" component={DispenserScreen} />
-        <Stack.Screen name="AquaS" component={AquaSScreen} />
         <Stack.Screen name="Reptilis" component={ReptilisScreen} />
         <Stack.Screen name="Aquatic" component={AquaticScreen} />
         <Stack.Screen name="Land" component={LandScreen} />
