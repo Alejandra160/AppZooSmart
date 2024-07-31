@@ -7,7 +7,16 @@ export const testAPI = async () => {
     const response = await axios.get(`${API_URL}/test`);
     return response.data;
   } catch (error) {
-    console.error('Error testing API:', error);
+    if (error.response) {
+      // El servidor respondió con un estado diferente a 2xx
+      console.error('Error testing API:', error.response.data);
+    } else if (error.request) {
+      // La solicitud fue hecha pero no hubo respuesta
+      console.error('Error testing API (no response):', error.request);
+    } else {
+      // Algo sucedió al configurar la solicitud
+      console.error('Error testing API (setup):', error.message);
+    }
     throw error;
   }
 };
