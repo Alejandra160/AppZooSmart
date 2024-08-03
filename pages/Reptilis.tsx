@@ -54,7 +54,6 @@ const ReptilisScreen: React.FC = () => {
       </TouchableOpacity>
       <Image source={require('../Images/LogoS.png')} style={styles.logoImage} />
       <Text style={styles.titleText}>REPTILIS ZONE</Text>
-      
       <Text style={styles.subText}>SPECIES</Text>
 
       <ScrollView contentContainerStyle={styles.speciesContainer}>

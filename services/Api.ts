@@ -2,24 +2,41 @@ import axios from 'axios';
 
 const API_URL = 'https://serverapifinal.onrender.com/api'; // URL
 
-export const testAPI = async () => {
+interface Animal {
+  id: number;
+  name: string;
+  species: string;
+  age: number;
+  // Add other properties relevant to the Animal type
+}
+
+
+export const testAPI = async (): Promise<Animal> => {
   try {
-    const response = await axios.get(`${API_URL}/test`);
+    const response = await axios.get<Animal>(`${API_URL}/test`);
     return response.data;
   } catch (error) {
-    if (error.response) {
-      // El servidor respondió con un estado diferente a 2xx
-      console.error('Error testing API:', error.response.data);
-    } else if (error.request) {
-      // La solicitud fue hecha pero no hubo respuesta
-      console.error('Error testing API (no response):', error.request);
+    const typedError = error as Error;
+      
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        // The server responded with a status other than 2xx
+        console.error('Error testing API:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error testing API (no response):', error.request);
+      } else {
+        // Something happened in setting up the request
+        console.error('Error testing API (setup):', error.message);
+      }
     } else {
-      // Algo sucedió al configurar la solicitud
-      console.error('Error testing API (setup):', error.message);
+      // Handle non-Axios errors
+      console.error('Error testing API (non-Axios):', typedError.message);
     }
     throw error;
   }
 };
+
 
 interface LoginData {
   email: string;
